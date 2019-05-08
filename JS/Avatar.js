@@ -282,3 +282,15 @@ class Avatar
 	}
 
 }
+
+let initXPos = 0;
+let initYPos = 0;
+let img = new Image();
+img.src = "Images/John.png";
+img.width = 640;
+img.height = 480;
+let noOfRows = 6;
+let noOfCols = 8;
+let hp = 100;
+
+var player1 = new Avatar(initXPos,initYPos,img.src,img.width,img.height,noOfRows,noOfCols,hp);

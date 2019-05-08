@@ -21,10 +21,10 @@ function start()
 	//initPlayer1();
 	setInterval(animate,1000 / 60);
 	var can = document.getElementById('canvas-1')
-	can.onclick = function (event) 
+	/*can.onclick = function (event) 
 								{
 									si = !si;
-								}	
+								}	*/
 }
 
 start();

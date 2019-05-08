@@ -188,3 +188,15 @@ class Grunt
 	}
 
 }
+
+let gInitXPos = 500;
+let gInitYPos = 300;
+let gImg = new Image();
+gImg.src = "Images/John.png";
+gImg.width = 640;
+gImg.height = 480;
+let gNoOfRows = 6;
+let gNoOfCols = 8;
+let gHp = 100;
+
+var grunt1 = new Grunt(gInitXPos,gInitYPos,gImg.src,gImg.width,gImg.height,gNoOfRows,gNoOfCols,gHp);
