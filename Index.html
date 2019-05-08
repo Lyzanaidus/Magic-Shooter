@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Magic Shooter</title>
+	<link rel="stylesheet" type="text/css" href="CSS/MagicShooter.css">
+</head>
+<body>
+
+	<canvas id="canvas-1">
+		
+	</canvas>
+	
+	<script type="text/javascript" src="JS/Canvas.js"></script>
+	
+	<script type="text/javascript" src="JS/Ammo.js"></script>
+	
+	<script type="text/javascript" src="JS/Avatar.js"></script>
+	
+	<script type="text/javascript">
+		let initXPos = 0;
+		let initYPos = 0;
+		let img = new Image();
+		img.src = "Images/john.png";
+		img.width = 640;
+		img.height = 480;
+		let noOfRows = 6;
+		let noOfCols = 8;
+		let hp = 100;
+
+		var player1 = new Avatar(initXPos,initYPos,img.src,img.width,img.height,noOfRows,noOfCols,hp);
+	</script>
+	
+	<script type="text/javascript" src="JS/Grunt.js"></script>
+	
+	<script type="text/javascript">
+		let gInitXPos = 500;
+		let gInitYPos = 300;
+		let gImg = new Image();
+		gImg.src = "Images/john.png";
+		gImg.width = 640;
+		gImg.height = 480;
+		let gNoOfRows = 6;
+		let gNoOfCols = 8;
+		let gHp = 100;
+
+		var grunt1 = new Grunt(gInitXPos,gInitYPos,gImg.src,gImg.width,gImg.height,gNoOfRows,gNoOfCols,gHp);
+	</script>
+	
+	<script type="text/javascript" src="JS/World.js"></script>
+	
+</body>
+</html>
