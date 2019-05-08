@@ -54,19 +54,6 @@ class Avatar
 									
 									//console.log('event.keyCode : ',event.keyCode);
 									
-									if (event.keyCode === this.upKey) 
-									{
-										//console.log('up pressed.');
-										this.nextMove[0] = true;
-										this.nextMove[1] = false;
-									}
-									else if (event.keyCode === this.downKey) 
-									{
-										//console.log('down pressed.');
-										this.nextMove[1] = true;
-										this.nextMove[0] = false;	
-									}
-									
 									if (event.keyCode === this.leftKey) 
 									{
 										//console.log('left pressed.');
@@ -88,7 +75,37 @@ class Avatar
 
 								
 								);
+										
+		document.addEventListener(
+								'keydown',
+								event =>
+								{
+									//console.log('[Class Avatar]\n','Avatar Input');
+									
+									//console.log('event.keyCode : ',event.keyCode);
+									
+									if (event.keyCode === this.upKey) 
+									{
+										//console.log('up pressed.');
+										this.nextMove[0] = true;
+										this.nextMove[1] = false;
+									}
+									else if (event.keyCode === this.downKey) 
+									{
+										//console.log('down pressed.');
+										this.nextMove[1] = true;
+										this.nextMove[0] = false;	
+									}
+									
+									//console.log(this.nextMove);
+									this.updateAnimation();
+									this.updatePos();
+								}
 
+								
+								);
+
+		
 		document.addEventListener(
 								'keyup',
 								event =>
@@ -149,8 +166,6 @@ class Avatar
 		
 		this.xPos = this.xPos + (this.speed * dx);
 		this.yPos = this.yPos + (this.speed * dy);
-
-		grunt1.updatePos(this.xPos,this.yPos);
 
 		//console.log('XPos : ',this.xPos,'YPos : ',this.yPos);
 	}
@@ -279,6 +294,11 @@ class Avatar
 			}
 		}
 		//console.log('ammoArr[',this.bulletNo,'] : ',this.ammoArr[this.bulletNo]);
+	}
+
+	start()
+	{
+		this.display();
 	}
 
 }

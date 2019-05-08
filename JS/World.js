@@ -7,7 +7,7 @@ function animate()
 	if (si) 
 	{
 		displayBg();
-		player1.display();	
+		player1.start();	
 		for (var i = 0; i < player1.ammoArr.length; i++) 
 		{
 			player1.ammoArr[i].start();

@@ -28,7 +28,7 @@ class Grunt
 		
 		this.dx = 0;
 		this.dy = 0;
-		this.speed = 2;
+		this.speed = 1;
 		
 		this.isFacingLeft = true;
 		this.previousIsFacingLeft = true;
@@ -41,6 +41,8 @@ class Grunt
 
 		this.targetXPos = 100;
 		this.targetYPos = 100;
+
+		this.animationDelayCounter = 0
 	}
 
 	animate(sheetCurrentRow,sheetCurrentCol) 
@@ -60,7 +62,6 @@ class Grunt
 		this.xPos = this.xPos + (this.speed * this.dx);
 		this.yPos = this.yPos + (this.speed * this.dy);
 
-		this.updateAnimation();
 		//console.log('XPos : ',this.xPos,'YPos : ',this.yPos);
 	}
 
@@ -96,63 +97,64 @@ class Grunt
 
 	checkDir()
 	{
-		if (this.targetXPos + this.width < this.xPos)			//	this.width should be playe.width but it works
+		//console.log('[Class Grunt]\n','Function : isDirChange()');
+
+		if (player1.xPos + player1.width < this.xPos)			//	this.width should be playe.width but it works
 		{
 			this.isFacingLeft = true;
-			console.log(this.targetXPos + this.width,this.xPos);
-			console.log('isFacingLeft : ',this.isFacingLeft);
 		}
-		else /*if (this.targetXPos > this.xPos) */
+		else if (player1.xPos > this.xPos + this.width)
 		{
 			this.isFacingLeft = false;
-			console.log(this.targetXPos,this.xPos);
-			console.log('isFacingLeft : ',this.isFacingLeft);
-		
 		}
 	}
 
 	updateAnimation()
 	{
-		console.log('[Class Grunt]\n','Function : updateAnimation()');
-
-		this.nextSpriteCol();
-
-		this.checkDir();
-		if (this.isDirChange()) 
+		//console.log('[Class Grunt]\n','Function : updateAnimation()');
+		if(this.animationDelayCounter === 0)
 		{
-			//console.log('[Class Grunt]\n','DirChange : ',this.isDirChange());
-			this.sheetCurrentCol = 0;
-			//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
+			this.nextSpriteCol();
+
+			this.checkDir();
+			if (this.isDirChange()) 
+			{
+				//console.log('[Class Grunt]\n','DirChange : ',this.isDirChange());
+				this.sheetCurrentCol = 0;
+				//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
+			}
+
+			if (this.isFacingLeft) 
+			{
+				//console.log('[Class Grunt]\n','FacingLeft : ',this.isFacingLeft);
+				this.sheetCurrentRow = 3;			//	Row 0 Mirror (i.e. Right to Left)
+				this.sheetCurrentCol = this.noOfCols - 1 - this.sheetCurrentCol;
+				//console.log('sheetCurrentRow : ',this.sheetCurrentRow);
+				//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
+			}
+			else
+			{
+				//console.log('[Class Grunt]\n','FacingLeft : ',this.isFacingLeft);
+				this.sheetCurrentRow = 0;
+				//console.log('sheetCurrentRow : ',this.sheetCurrentRow);
+			}
+
+			this.previousIsFacingLeft = this.isFacingLeft;
+
+			this.animate(this.sheetCurrentRow,this.sheetCurrentCol);
 		}
 
-		if (this.isFacingLeft) 
-		{
-			//console.log('[Class Grunt]\n','FacingLeft : ',this.isFacingLeft);
-			this.sheetCurrentRow = 3;			//	Row 0 Mirror (i.e. Right to Left)
-			this.sheetCurrentCol = this.noOfCols - 1 - this.sheetCurrentCol;
-			//console.log('sheetCurrentRow : ',this.sheetCurrentRow);
-			//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
-		}
-		else
-		{
-			//console.log('[Class Grunt]\n','FacingLeft : ',this.isFacingLeft);
-			this.sheetCurrentRow = 0;
-			//console.log('sheetCurrentRow : ',this.sheetCurrentRow);
-		}
-
-		this.previousIsFacingLeft = this.isFacingLeft;
-
-		this.animate(this.sheetCurrentRow,this.sheetCurrentCol); 
+		this.animationDelayCounter = (this.animationDelayCounter + 1) % 3;  
 	}
 
-	updatePos(targetXPos,targetYPos)
+	updatePos()
 	{
 		//console.log('[Class Grunt]\n','Function : updatePos()');
 
 		if (true) 
 		{
-			this.xMovement = (targetXPos - this.xPos);
-			this.yMovement = (targetYPos - this.yPos);
+			this.xMovement = (player1.xPos - this.xPos);
+			this.yMovement = (player1.yPos - this.yPos);
 			this.totalMovement = Math.abs(this.xMovement) + Math.abs(this.yMovement);
 			this.dx = (this.xMovement / this.totalMovement) * this.speed;
 			this.dy = (this.yMovement / this.totalMovement) * this.speed;	
@@ -178,6 +180,11 @@ class Grunt
 
 	start()
 	{
+		if((player1.xPos != this.xPos) && (player1.yPos != this.yPos))
+		{
+			this.updateAnimation();	
+		}
+		this.updatePos();
 		this.move();
 		this.display();
 		/*//console.log('Area X : ',this.xPos,this.xPos + this.width);
