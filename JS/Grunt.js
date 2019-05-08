@@ -99,11 +99,11 @@ class Grunt
 	{
 		//console.log('[Class Grunt]\n','Function : isDirChange()');
 
-		if (player1.xPos + player1.width < this.xPos)			//	this.width should be playe.width but it works
+		if (player1.xPos + player1.width / 2 < this.xPos)			//	this.width should be playe.width but it works
 		{
 			this.isFacingLeft = true;
 		}
-		else if (player1.xPos > this.xPos + this.width)
+		else if (player1.xPos > this.xPos + this.width / 2)
 		{
 			this.isFacingLeft = false;
 		}

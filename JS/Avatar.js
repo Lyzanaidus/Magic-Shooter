@@ -54,6 +54,19 @@ class Avatar
 									
 									//console.log('event.keyCode : ',event.keyCode);
 									
+									if (event.keyCode === this.upKey) 
+									{
+										//console.log('up pressed.');
+										this.nextMove[0] = true;
+										this.nextMove[1] = false;
+									}
+									else if (event.keyCode === this.downKey) 
+									{
+										//console.log('down pressed.');
+										this.nextMove[1] = true;
+										this.nextMove[0] = false;	
+									}
+									
 									if (event.keyCode === this.leftKey) 
 									{
 										//console.log('left pressed.');
@@ -75,37 +88,7 @@ class Avatar
 
 								
 								);
-										
-		document.addEventListener(
-								'keydown',
-								event =>
-								{
-									//console.log('[Class Avatar]\n','Avatar Input');
-									
-									//console.log('event.keyCode : ',event.keyCode);
-									
-									if (event.keyCode === this.upKey) 
-									{
-										//console.log('up pressed.');
-										this.nextMove[0] = true;
-										this.nextMove[1] = false;
-									}
-									else if (event.keyCode === this.downKey) 
-									{
-										//console.log('down pressed.');
-										this.nextMove[1] = true;
-										this.nextMove[0] = false;	
-									}
-									
-									//console.log(this.nextMove);
-									this.updateAnimation();
-									this.updatePos();
-								}
 
-								
-								);
-
-		
 		document.addEventListener(
 								'keyup',
 								event =>
@@ -299,6 +282,7 @@ class Avatar
 	start()
 	{
 		this.display();
+		//grunt1.start();
 	}
 
 }
