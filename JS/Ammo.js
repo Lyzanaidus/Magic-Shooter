@@ -42,7 +42,7 @@ class Ammo
 		
 		this.isFacingLeft = isFacingLeft;
 		
-		this.damage = 2;
+		this.damage = 30;
 		this.sheetCurrentRow = 0;
 		this.sheetCurrentCol = 0;
 		this.nextSpriteCounter = 0;
@@ -68,7 +68,7 @@ class Ammo
 		this.xPos = this.xPos + (this.dx * this.speed); 
 		this.yPos = this.yPos + (this.dy * this.speed); 
 
-		//console.log('XPos : ',this.xPos,'YPos : ',this.yPos);
+		// console.log('XPos : ',this.dx,'YPos : ',this.dy);
 	}
 
 	display() 

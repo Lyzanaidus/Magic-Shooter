@@ -1,5 +1,8 @@
 var si = true;
 
+var maxGruntNo = 5;
+var gruntArr = [];
+
 function isCollision(object1,object2) 
 {
 	this.object1 = object1;
@@ -17,6 +20,30 @@ function isCollision(object1,object2)
 	}
 }
 
+function spawn(initXPos,initYPos) 
+{
+	//console.log('Function : spawn()');
+	let gInitXPos = initXPos;
+	let gInitYPos = initYPos;
+	let gImg = new Image();
+	gImg.src = "Images/Grunt.png";
+	gImg.width = 640;
+	gImg.height = 480;
+	let gNoOfRows = 6;
+	let gNoOfCols = 8;
+	let gHp = 100;
+
+	this.gruntArr.push(new Grunt(gInitXPos,gInitYPos,gImg.src,gImg.width,gImg.height,gNoOfRows,gNoOfCols,gHp));
+}
+
+function initGrunts() 
+{
+	for (var i = 0; i < maxGruntNo; i++) 
+	{
+		spawn(Math.random() * 1000,Math.random() * 600);
+	}
+}
+
 function animate() 
 {
 	//console.log('Function : animate()');
@@ -25,26 +52,50 @@ function animate()
 	if (si) 
 	{
 		displayBg();
+		player1.start();
 		for (var i = 0; i < player1.ammoArr.length; i++) 
 		{
 			player1.ammoArr[i].start();
-			if (isCollision(player1.ammoArr[i],grunt1)) 
+		}
+		for (let i = 0; i < player1.ammoArr.length; i++) 		
+		{
+			for (let j = 0; j < gruntArr.length; j++) 
 			{
-				//console.log(isCollision(player1.ammoArr[i],grunt1));
-				grunt1.xPos = grunt1.xPos - (grunt1.dx * grunt1.speed);
-				grunt1.hp = grunt1.hp - player1.ammoArr[i].damage;
-				player1.ammoArr[i].xPos = player1.ammoArr[i].xPos - (player1.ammoArr[i].dx * player1.ammoArr[i].speed);
-				player1.ammoArr[i].explode = true;
+				if (isCollision(player1.ammoArr[i],gruntArr[j])) 
+				{
+					//console.log(isCollision(player1.ammoArr[i],gruntArr[j]));
+					gruntArr[j].xPos = gruntArr[j].xPos - (gruntArr[j].dx * gruntArr[j].speed);
+					player1.ammoArr[i].xPos = player1.ammoArr[i].xPos - (player1.ammoArr[i].dx);
+
+					if (!player1.ammoArr[i].explode) 
+					{
+						gruntArr[j].hp = gruntArr[j].hp - player1.ammoArr[i].damage;
+					}
+
+					player1.ammoArr[i].explode = true;
+				}
 			}
 		}
-		if (isCollision(player1,grunt1)) 
+		for (let i = 0; i < gruntArr.length; i++) 
 		{
-			//console.log(isCollision(player1,grunt1));
-			player1.xPos = player1.xPos - (player1.dx * player1.speed);
-			grunt1.xPos = grunt1.xPos - (grunt1.dx * grunt1.speed);
+			if (isCollision(player1,gruntArr[i])) 
+			{
+				//console.log(isCollision(player1,gruntArr[j]));
+				player1.xPos = player1.xPos - (player1.dx * player1.speed);
+				gruntArr[i].xPos = gruntArr[i].xPos - (gruntArr[i].dx * gruntArr[i].speed);
+			}
 		}
-		player1.start();	
-		grunt1.start();
+		
+			
+		for (var i = 0; i < gruntArr.length; i++) 
+		{
+			gruntArr[i].start();
+			if (gruntArr[i].hp > 0 ) 
+			{
+				console.log('Grunt',i,' HP : ',gruntArr[i].hp);	
+			}
+				
+		}
 
 	}
 }
@@ -60,4 +111,5 @@ function start()
 								}	*/
 }
 
+initGrunts();
 start();
