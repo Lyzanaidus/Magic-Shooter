@@ -25,24 +25,27 @@ function animate()
 	if (si) 
 	{
 		displayBg();
-		player1.start();	
-		grunt1.start();
 		for (var i = 0; i < player1.ammoArr.length; i++) 
 		{
 			player1.ammoArr[i].start();
 			if (isCollision(player1.ammoArr[i],grunt1)) 
 			{
-				console.log(isCollision(player1.ammoArr[i],grunt1));
-				player1.ammoArr[i].xPos = player1.ammoArr[i].xPos - (player1.ammoArr[i].dx * player1.ammoArr[i].speed);
+				//console.log(isCollision(player1.ammoArr[i],grunt1));
 				grunt1.xPos = grunt1.xPos - (grunt1.dx * grunt1.speed);
+				grunt1.hp = grunt1.hp - player1.ammoArr[i].damage;
+				player1.ammoArr[i].xPos = player1.ammoArr[i].xPos - (player1.ammoArr[i].dx * player1.ammoArr[i].speed);
+				player1.ammoArr[i].explode = true;
 			}
 		}
 		if (isCollision(player1,grunt1)) 
 		{
-			console.log(isCollision(player1,grunt1));
+			//console.log(isCollision(player1,grunt1));
 			player1.xPos = player1.xPos - (player1.dx * player1.speed);
 			grunt1.xPos = grunt1.xPos - (grunt1.dx * grunt1.speed);
 		}
+		player1.start();	
+		grunt1.start();
+
 	}
 }
 

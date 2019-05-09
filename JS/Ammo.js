@@ -42,9 +42,13 @@ class Ammo
 		
 		this.isFacingLeft = isFacingLeft;
 		
+		this.damage = 2;
 		this.sheetCurrentRow = 0;
 		this.sheetCurrentCol = 0;
+		this.nextSpriteCounter = 0;
 		this.animationDelayCounter = 0;
+		this.explode = false;
+		this.explodeCount = 0;
 	}
 
 	animate(sheetCurrentRow,sheetCurrentCol) 
@@ -104,7 +108,8 @@ class Ammo
 	{
 		//console.log('[Class Ammo]\n','Function : nextSpriteCol()');
 
-		this.sheetCurrentCol = (this.sheetCurrentCol + 1) % (this.noOfCols - 4);			//	Since we only need sprites (0,3) to (0,7)
+		this.nextSpriteCounter = (this.nextSpriteCounter + 1) % (this.noOfCols - 4);			//	Since we only need sprites (0,3) to (0,7)
+		this.sheetCurrentCol = this.nextSpriteCounter;			//	Since we only need sprites (0,3) to (0,7)
 
 		//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
 	}
@@ -116,15 +121,6 @@ class Ammo
 		if(this.animationDelayCounter === 0)
 		{
 			this.nextSpriteCol();	
-		
-			/*
-			if (this.isCollision()) 
-			{
-				//console.log('[Class Ammo]\n','DirChange : ',this.isDirChange());
-				this.sheetCurrentCol = 0;
-				//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
-			}
-			*/
 
 			if (this.isFacingLeft) 
 			{
@@ -141,6 +137,28 @@ class Ammo
 				//console.log('sheetCurrentRow : ',this.sheetCurrentRow);
 				//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
 			}
+
+			if(this.explode)
+			{
+				if (this.explodeCount < 4) 
+				{
+					this.dx = 0;
+					this.dy = 0;
+					this.xPos = this.xPos + (this.dx / 2);	
+					this.sheetCurrentRow = (this.sheetCurrentRow + 3) % 4;
+					this.sheetCurrentCol = (this.noOfCols - this.nextSpriteCounter);
+				}
+				else
+				{
+					this.xPos = -500;
+					this.yPos = -500;
+					this.sheetCurrentRow = -1;
+					this.dx = 0;
+					this.dy = 0;
+				}
+
+				this.explodeCount++;
+			}		
 
 			this.animate(this.sheetCurrentRow,this.sheetCurrentCol); 
 		}

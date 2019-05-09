@@ -187,6 +187,15 @@ class Grunt
 		this.updatePos();
 		this.move();
 		this.display();
+		if (this.hp <= 0) 
+		{
+			this.xPos = -500;
+			this.yPos = -500;
+			this.sheetCurrentRow = -1;
+			this.dx = 0;
+			this.dy = 0;
+		}
+		
 		/*//console.log('Area X : ',this.xPos,this.xPos + this.width);
 		//console.log('targetXPos : ',this.targetXPos);
 		//console.log('Area Y : ',this.yPos,this.yPos + this.height);
@@ -199,7 +208,7 @@ class Grunt
 let gInitXPos = 500;
 let gInitYPos = 300;
 let gImg = new Image();
-gImg.src = "Images/John.png";
+gImg.src = "Images/Grunt.png";
 gImg.width = 640;
 gImg.height = 480;
 let gNoOfRows = 6;
