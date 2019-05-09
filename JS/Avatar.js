@@ -287,8 +287,8 @@ class Avatar
 
 }
 
-let initXPos = 0;
-let initYPos = 0;
+let initXPos = 100;
+let initYPos = 100;
 let img = new Image();
 img.src = "Images/John.png";
 img.width = 640;
