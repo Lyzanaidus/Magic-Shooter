@@ -121,16 +121,18 @@ class Avatar
 
 		var AvatarObject = this;
 		var can = document.getElementById('canvas-1')
-		can.onclick = function (event) 
-								{
-									
-									//console.log('clicked at ',event.clientX,event.clientY);
-									AvatarObject.targetXPos = event.clientX;
-									AvatarObject.targetYPos = event.clientY;
-									AvatarObject.fire(AvatarObject.targetXPos,AvatarObject.targetYPos);
-									
-								}
-
+		
+		if (this.hp > 0) 
+		{
+			can.onclick = function (event) 
+			{
+				
+				//console.log('clicked at ',event.clientX,event.clientY);
+				AvatarObject.targetXPos = event.clientX;
+				AvatarObject.targetYPos = event.clientY;
+				AvatarObject.fire(AvatarObject.targetXPos,AvatarObject.targetYPos);	
+			}
+		}
 	}
 
 	animate(sheetCurrentRow,sheetCurrentCol) 
@@ -282,13 +284,20 @@ class Avatar
 	start()
 	{
 		this.display();
-		//grunt1.start();
+		if (this.hp <= 0) 
+		{
+			this.xPos = 2000;
+			this.yPos = 300;
+			this.sheetCurrentRow = -1;
+			this.dx = 0;
+			this.dy = 0;
+		}
 	}
 
 }
 
-let initXPos = 100;
-let initYPos = 100;
+let initXPos = 500;
+let initYPos = 300;
 let img = new Image();
 img.src = "Images/John.png";
 img.width = 640;

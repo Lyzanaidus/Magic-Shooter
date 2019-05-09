@@ -1,6 +1,6 @@
 var si = true;
 
-var maxGruntNo = 5;
+var maxGruntNo = 20;
 var gruntArr = [];
 
 function isCollision(object1,object2) 
@@ -40,7 +40,7 @@ function initGrunts()
 {
 	for (var i = 0; i < maxGruntNo; i++) 
 	{
-		spawn(Math.random() * 1000,Math.random() * 600);
+		spawn((Math.random() * 1000),(Math.random() * 600) + 100);
 	}
 }
 
@@ -53,6 +53,7 @@ function animate()
 	{
 		displayBg();
 		player1.start();
+		console.log('PLayer1 HP : ',player1.hp);		
 		for (var i = 0; i < player1.ammoArr.length; i++) 
 		{
 			player1.ammoArr[i].start();
@@ -76,12 +77,28 @@ function animate()
 				}
 			}
 		}
+		for (let i = 0; i < gruntArr.length; i++) 		
+		{
+			for (let j = i; j < gruntArr.length; j++) 
+			{
+				if (i != j) 
+				{
+					if (isCollision(gruntArr[i],gruntArr[j])) 
+					{
+						//console.log(isCollision(gruntArr[i],gruntArr[j]));
+						gruntArr[i].xPos = gruntArr[i].xPos - (gruntArr[i].dx * gruntArr[i].speed);
+						gruntArr[i].yPos = gruntArr[i].yPos - (gruntArr[i].dy * gruntArr[i].speed);
+					}
+				}
+			}
+		}
 		for (let i = 0; i < gruntArr.length; i++) 
 		{
 			if (isCollision(player1,gruntArr[i])) 
 			{
-				//console.log(isCollision(player1,gruntArr[j]));
+				//console.log(isCollision(player1,gruntArr[i]));
 				player1.xPos = player1.xPos - (player1.dx * player1.speed);
+				player1.hp = player1.hp - gruntArr[i].damage;
 				gruntArr[i].xPos = gruntArr[i].xPos - (gruntArr[i].dx * gruntArr[i].speed);
 			}
 		}
@@ -89,12 +106,7 @@ function animate()
 			
 		for (var i = 0; i < gruntArr.length; i++) 
 		{
-			gruntArr[i].start();
-			if (gruntArr[i].hp > 0 ) 
-			{
-				console.log('Grunt',i,' HP : ',gruntArr[i].hp);	
-			}
-				
+			gruntArr[i].start();				
 		}
 
 	}

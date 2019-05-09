@@ -42,6 +42,8 @@ class Grunt
 		this.targetXPos = 100;
 		this.targetYPos = 100;
 
+		this.damage = .5;
+
 		this.animationDelayCounter = 0
 	}
 
