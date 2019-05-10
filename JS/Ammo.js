@@ -81,7 +81,14 @@ class Ammo
 		//console.log('[Class Ammo]\n','Function : display()');
 		this.dotXArr.push(x);
 		this.dotYArr.push(y);
-		ctx.drawImage(this.sheet,this.sheetWinXPos,this.sheetWinYPos,this.sheetWinWidth,this.sheetWinHeight,(this.width/2),0,this.width,this.height);
+		if (this.isFacingLeft) 
+		{
+			ctx.drawImage(this.sheet,this.sheetWinXPos,this.sheetWinYPos,this.sheetWinWidth,this.sheetWinHeight,-(this.width/2),0,this.width,this.height)	
+		}
+		else 
+		{
+			ctx.drawImage(this.sheet,this.sheetWinXPos,this.sheetWinYPos,this.sheetWinWidth,this.sheetWinHeight,(this.width/2),0,this.width,this.height)	
+		}
 		/*
 		//console.log('sheet : ',this.sheet,'\nsheetWinXPos : ',this.sheetWinXPos,'\nsheetWinYPos : ',this.sheetWinYPos
 					,'\nsheetWinWidth : ',this.sheetWinWidth,'\nsheetWinHeight : ',this.sheetWinHeight

@@ -52,12 +52,13 @@ function animate()
 	if (si) 
 	{
 		displayBg();
-		player1.start();
 		console.log('PLayer1 HP : ',player1.hp);		
 		for (var i = 0; i < player1.ammoArr.length; i++) 
 		{
 			player1.ammoArr[i].start();
 		}
+		player1.start();
+		
 		for (let i = 0; i < player1.ammoArr.length; i++) 		
 		{
 			for (let j = 0; j < gruntArr.length; j++) 
