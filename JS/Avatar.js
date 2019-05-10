@@ -261,13 +261,14 @@ class Avatar
 		var noOfCols = 8;
 		var targetXPos = tXPos;
 		var targetYPos = tYPos;
-
+	
 		if (!this.isFacingLeft) 
 		{
 			if (targetXPos >= this.xPos + this.width) 
 			{
 				this.bulletNo++;
 				this.ammoArr.push(new Ammo(this.xPos,this.yPos,img.src,img.width,img.height,noOfRows,noOfCols,targetXPos,targetYPos,this.isFacingLeft));
+				console.log(targetXPos,this.xPos + this.width,this.xPos,this.width)
 			}
 		}
 		else 

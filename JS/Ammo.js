@@ -49,6 +49,11 @@ class Ammo
 		this.animationDelayCounter = 0;
 		this.explode = false;
 		this.explodeCount = 0;
+
+		this.dotXArr = [];
+		this.dotYArr = [];
+		this.asd = 0;
+
 	}
 
 	animate(sheetCurrentRow,sheetCurrentCol) 
@@ -71,11 +76,12 @@ class Ammo
 		// console.log('XPos : ',this.dx,'YPos : ',this.dy);
 	}
 
-	display() 
+	display(x=this.xPos, y=this.yPos) 
 	{
 		//console.log('[Class Ammo]\n','Function : display()');
-
-		ctx.drawImage(this.sheet,this.sheetWinXPos,this.sheetWinYPos,this.sheetWinWidth,this.sheetWinHeight,this.xPos,this.yPos,this.width,this.height);
+		this.dotXArr.push(x);
+		this.dotYArr.push(y);
+		ctx.drawImage(this.sheet,this.sheetWinXPos,this.sheetWinYPos,this.sheetWinWidth,this.sheetWinHeight,(this.width/2),0,this.width,this.height);
 		/*
 		//console.log('sheet : ',this.sheet,'\nsheetWinXPos : ',this.sheetWinXPos,'\nsheetWinYPos : ',this.sheetWinYPos
 					,'\nsheetWinWidth : ',this.sheetWinWidth,'\nsheetWinHeight : ',this.sheetWinHeight
@@ -88,21 +94,18 @@ class Ammo
 	{
 		//console.log('[Class Ammo]\n','Function : rotate(',degrees,')');
 		ctx.save();
-		//ctx.translate(player1.xPos,player1.yPos);
+		ctx.translate(this.xPos,this.yPos)
 		ctx.rotate(degrees);
 		this.display();
-		dot();
-		this.dot();
-		//debugger
 		ctx.restore();
 	}
-	dot() 
+
+	ddot(x,y) 
 	{	
 		ctx.fillStyle = 'pink';
-		ctx.fillRect(this.xPos + (this.width),this.yPos + (this.height / 2),3,3);
-
+		//ctx.fillRect(this.xPos + (this.width),this.yPos + (this.height / 2),3,3);
+		ctx.fillRect(x + this.width / 2 ,y + this.height / 2,3,3);
 	}
-
 
 	nextSpriteCol()
 	{
@@ -174,11 +177,13 @@ class Ammo
 		//console.log('Function : start()');
 		
 		//clearCanvas();
+		this.rotate(this.angle);
+		//this.rotate(this.asd);
+		//this.asd++;
 		this.move();
 		this.updateAnimation();
-		//this.rotate(this.angle);
-		this.display();
-		
+		//this.display();
+		//setInterval(this.pdot,100);
 		//debugger
 	}
 }

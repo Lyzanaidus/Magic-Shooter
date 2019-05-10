@@ -1,6 +1,6 @@
 var si = true;
 
-var maxGruntNo = 20;
+var maxGruntNo = 10;
 var gruntArr = [];
 
 function isCollision(object1,object2) 
