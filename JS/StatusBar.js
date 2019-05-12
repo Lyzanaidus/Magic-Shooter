@@ -23,7 +23,6 @@ class statusBar
 
 	constructor(xPos,yPos,points,maxPoints,pointsBarWidth,pointsBarHeight,colour,inactiveColour)
 	{
-		//console.log('statusBar');
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.points = points;

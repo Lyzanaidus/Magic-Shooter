@@ -12,19 +12,15 @@ class Grunt
 		this.sheet.src = imgSrc;
 		this.sheetWidth = imgWidth;
 		this.sheetHeight = imgHeight;
-		//console.log('[Class Grunt]\n','sheetWidth : ',this.sheetWidth,'sheetHeight : ',this.sheetHeight);
 		
 		this.sheetWinXPos = 0;
 		this.sheetWinYPos = 0;
-		//console.log('[Class Grunt]\n','sheetWinXPos : ',this.sheetWinXPos,'sheetWinYPos : ',this.sheetWinYPos);
 		
 		this.sheetWinWidth = (this.sheetWidth / this.noOfCols);
 		this.sheetWinHeight = (this.sheetHeight / this.noOfRows);
-		//console.log('[Class Grunt]\n','sheetWinWidth : ',this.sheetWinWidth,'sheetWinHeight : ',this.sheetWinHeight);
 		
 		this.width = this.sheetWidth / this.noOfCols;
 		this.height = this.sheetHeight / this.noOfRows;
-		//console.log('[Class Grunt]\n','width : ',this.width,'height : ',this.height);
 		
 		this.dx = 0;
 		this.dy = 0;
@@ -50,58 +46,34 @@ class Grunt
 
 	animate(sheetCurrentRow,sheetCurrentCol) 
 	{
-		//console.log('[Class Grunt]\n','Function : animate()');
-		
 		this.sheetWinXPos = sheetCurrentCol * this.sheetWinWidth;
 		this.sheetWinYPos = sheetCurrentRow * this.sheetWinHeight;
-
-		//console.log('sheetWinXPos : ',this.sheetWinXPos,'sheetWinYPos : ',this.sheetWinYPos);
 	}
 
 	move() 
-	{
-		//console.log('[Class Grunt]\n','Function : move()');
-		
+	{	
 		this.xPos = this.xPos + (this.speed * this.dx);
 		this.yPos = this.yPos + (this.speed * this.dy);
-
-		//console.log('XPos : ',this.xPos,'YPos : ',this.yPos);
 	}
 
 	display() 
 	{
-		//console.log('[Class Grunt]\n','Function : display()');
-
 		ctx.drawImage(this.sheet,this.sheetWinXPos,this.sheetWinYPos,this.sheetWinWidth,this.sheetWinHeight,this.xPos,this.yPos,this.width,this.height);
-		/*
-		//console.log('sheet : ',this.sheet,'\nsheetWinXPos : ',this.sheetWinXPos,'\nsheetWinYPos : ',this.sheetWinYPos
-					,'\nsheetWinWidth : ',this.sheetWinWidth,'\nsheetWinHeight : ',this.sheetWinHeight
-					,'\nXPos : ',this.xPos,'\nYPos : ',this.yPos,'\nwidth : ',this.width,'\nheight : ',this.height);
-		*/
 	}
 
 	nextSpriteCol()
 	{
-		//console.log('[Class Grunt]\n','Function : nextSpriteCol()');
-
 		this.nextSpriteCounter = (this.nextSpriteCounter + 1) % (this.noOfCols - 3);
 		this.sheetCurrentCol = this.nextSpriteCounter + 3;			//	Since we only need sprites (0,3) to (0,7)
-
-		//console.log('nextSpriteCounter : ',this.nextSpriteCounter);
-		//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
 	}
 
 	isDirChange()			//	return XOR of (this.previousIsFacingLeft,this.isFacingLeft)
 	{
-		//console.log('[Class Grunt]\n','Function : isDirChange()');
-
 		return ((this.previousIsFacingLeft || this.isFacingLeft) && (!(this.previousIsFacingLeft && this.isFacingLeft)))
 	}
 
 	checkDir()
 	{
-		//console.log('[Class Grunt]\n','Function : isDirChange()');
-
 		if (this.target.xPos + this.target.width / 2 < this.xPos)			//	this.width should be playe.width but it works
 		{
 			this.isFacingLeft = true;
@@ -114,7 +86,6 @@ class Grunt
 
 	updateAnimation()
 	{
-		//console.log('[Class Grunt]\n','Function : updateAnimation()');
 		if(this.animationDelayCounter === 0)
 		{
 			this.nextSpriteCol();
@@ -122,24 +93,17 @@ class Grunt
 			this.checkDir();
 			if (this.isDirChange()) 
 			{
-				//console.log('[Class Grunt]\n','DirChange : ',this.isDirChange());
 				this.sheetCurrentCol = 0;
-				//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
 			}
 
 			if (this.isFacingLeft) 
 			{
-				//console.log('[Class Grunt]\n','FacingLeft : ',this.isFacingLeft);
 				this.sheetCurrentRow = 3;			//	Row 0 Mirror (i.e. Right to Left)
 				this.sheetCurrentCol = this.noOfCols - 1 - this.sheetCurrentCol;
-				//console.log('sheetCurrentRow : ',this.sheetCurrentRow);
-				//console.log('sheetCurrentCol : ',this.sheetCurrentCol);
 			}
 			else
 			{
-				//console.log('[Class Grunt]\n','FacingLeft : ',this.isFacingLeft);
 				this.sheetCurrentRow = 0;
-				//console.log('sheetCurrentRow : ',this.sheetCurrentRow);
 			}
 
 			this.previousIsFacingLeft = this.isFacingLeft;
@@ -152,8 +116,6 @@ class Grunt
 
 	updatePos()
 	{
-		//console.log('[Class Grunt]\n','Function : updatePos()');
-
 		if (true) 
 		{
 			this.xMovement = (this.target.xPos - this.xPos);
@@ -169,21 +131,9 @@ class Grunt
 		}
 	}
 
-	inArea()
-	{
-		if (((this.target.xPos >= this.xPos) && (this.target.xPos <= this.xPos + this.width)) && ((this.target.yPos >= this.yPos) && (this.target.yPos <= this.yPos + this.height))) 
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
 	start()
 	{
-		if (level1.player1.hp > 0) 
+		if (this.target.hp > 0) 
 		{
 			if((this.target.xPos != this.xPos) && (this.target.yPos != this.yPos))
 			{

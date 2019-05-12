@@ -13,7 +13,6 @@ class game
 	{
 		this.object1 = object1;
 		this.object2 = object2;
-		//console.log('2y',this.object2.yPos);
 		if ((this.object1.yPos < this.object2.yPos + this.object2.height) && (this.object2.yPos < this.object1.yPos + this.object1.height))
 		{
 			if ((this.object1.xPos < this.object2.xPos + this.object2.width / 2) && (this.object2.xPos < this.object1.xPos + this.object1.width / 2))
@@ -37,14 +36,13 @@ class game
 		img.height = 480;
 		let noOfRows = 6;
 		let noOfCols = 8;
-		let hp = 100;
+		let hp = 500;
 
 		this.player1 = new Avatar(initXPos,initYPos,img.src,img.width,img.height,noOfRows,noOfCols,hp);
 	}
 
 	spawnGrunt(initXPos,initYPos) 
 	{
-		//console.log('Function : spawn()');
 		let gInitXPos = initXPos;
 		let gInitYPos = initYPos;
 		let gImg = new Image();
@@ -60,9 +58,8 @@ class game
 
 	spawnBoss() 
 	{
-		//console.log('Function : spawn()');
 		let gImg = new Image();
-		gImg.src = "Images/John.png";
+		gImg.src = "Images/Woody.png";
 		gImg.width = 640;
 		gImg.height = 480;
 		let gNoOfRows = 6;
@@ -110,7 +107,6 @@ class game
 			{
 				if (this.isCollisionObj(this.player1.ammoArr[i],this.gruntArr[j])) 
 				{
-					//console.log(isCollisionObj(player1.ammoArr[i],gruntArr[j]));
 					this.gruntArr[j].xPos = this.gruntArr[j].xPos - (this.gruntArr[j].dx * this.gruntArr[j].speed);
 					this.player1.ammoArr[i].xPos = this.player1.ammoArr[i].xPos - (this.player1.ammoArr[i].dx);
 
@@ -132,7 +128,6 @@ class game
 		{
 			if (this.isCollisionObj(this.player1.ammoArr[i],this.Boss)) 
 			{
-				//console.log(isCollisionObj(player1.ammoArr[i],gruntArr[j]));
 				this.Boss.xPos = this.Boss.xPos - (this.Boss.dx * this.Boss.speed);
 				this.player1.ammoArr[i].xPos = this.player1.ammoArr[i].xPos - (this.player1.ammoArr[i].dx);
 
@@ -153,7 +148,6 @@ class game
 		{
 			if (this.isCollisionObj(this.Boss.ammoArr[i],this.player1)) 
 			{
-				//console.log(isCollisionObj(player1.ammoArr[i],gruntArr[j]));
 				this.player1.xPos = this.player1.xPos - (this.player1.dx * this.player1.speed);
 				this.Boss.ammoArr[i].xPos = this.Boss.ammoArr[i].xPos - (this.Boss.ammoArr[i].dx);
 
@@ -176,7 +170,6 @@ class game
 			{
 				if (this.isCollisionObj(this.Boss.ammoArr[i],this.player1.ammoArr[j])) 
 				{
-					//console.log(isCollisionObj(player1.ammoArr[i],gruntArr[j]));
 					this.Boss.ammoArr[i].xPos = this.Boss.ammoArr[i].xPos - (this.Boss.ammoArr[i].dx);
 					this.player1.ammoArr[j].xPos = this.player1.ammoArr[j].xPos - (this.player1.ammoArr[j].dx);
 
@@ -258,7 +251,6 @@ class game
 
 		if (this.object.xPos <= this.wallVLeft.xPos + this.wallVLeft.width) 
 		{
-			//console.log('left');
 			this.object.xPos =  (this.wallVLeft.xPos + this.wallVLeft.width);
 
 			return true;
@@ -266,7 +258,6 @@ class game
 		
 		else if (this.object.xPos >= this.wallVRight.xPos - this.object.width) 
 		{
-			//console.log('right');
 			this.object.xPos =  (this.wallVRight.xPos - this.object.width);
 
 			return true;
@@ -274,16 +265,13 @@ class game
 
 		if (this.object.yPos <= this.wallHTop.yPos) 
 		{
-			//console.log('up');
 			this.object.yPos =  (this.wallHTop.yPos);
 
 			return true;
 		}
 
 		else if (this.object.yPos >= this.wallHBottom.yPos - this.object.height) 
-		{
-			//console.log('down');
-			
+		{	
 			this.object.yPos =  (this.wallHBottom.yPos - this.object.height);
 
 			return true;
@@ -295,19 +283,30 @@ class game
 	{
 		for (let i = 0; i < this.gruntArr.length; i++) 		
 		{
-			for (let j = i; j < this.gruntArr.length; j++) 
+			for (let j = i; j < this.gruntArr.length; j++) 		
 			{
 				if (i != j) 
 				{
 					if (this.isCollisionObj(this.gruntArr[i],this.gruntArr[j])) 
 					{
-						//console.log(isCollisionObj(gruntArr[i],gruntArr[j]));
 						this.gruntArr[i].xPos = this.gruntArr[i].xPos - (this.gruntArr[i].dx * this.gruntArr[i].speed);
-						this.gruntArr[i].yPos = this.gruntArr[i].yPos - (this.gruntArr[i].dy * this.gruntArr[i].speed);
-					}
+					}	
 				}
+				
 			}
-		}	
+		}
+	}
+	
+	collisionGruntBoss()
+	{
+		for (let i = 0; i < this.gruntArr.length; i++) 		
+		{
+			if (this.isCollisionObj(this.gruntArr[i],this.Boss)) 
+			{
+				this.gruntArr[i].xPos = this.gruntArr[i].xPos - (this.gruntArr[i].dx * this.gruntArr[i].speed);
+				this.gruntArr[i].yPos = this.gruntArr[i].yPos - (this.gruntArr[i].dy * this.gruntArr[i].speed);
+			}
+		}
 	}
 
 	collisionPlayer1Grunt()
@@ -329,7 +328,7 @@ class game
 		{
 			this.player1.xPos = this.player1.xPos - ((this.player1.dx * this.player1.speed) + (this.player1.dx * 2));
 			this.player1.hp = this.player1.hp - this.Boss.damage;
-			this.Boss.xPos = this.Boss.xPos - (this.Boss.dx * this.Boss.speed);
+			this.Boss.xPos = this.Boss.xPos - ((this.Boss.dx * this.Boss.speed) + (this.Boss.dx * 2));
 		}
 	
 	}
@@ -348,26 +347,23 @@ class game
 		ctx.save();
 		var playerImg = new Img("Images/john_s.png",25,10);
 		var hp = this.player1.hp;
-		var mp = hp;
+		var maxHp = 500;
 
-		if (hp < 30) 
+		if (hp < .3 * maxHp) 
 		{
-			var hpBar = new statusBar(80,15,hp,100,150,15,'red','#314c70');
+			var hpBar = new statusBar(80,15,hp,maxHp,150,15,'red','#314c70');
 		}
-		else if (hp < 60) 
+		else if (hp < .6 * maxHp) 
 		{
-			var hpBar = new statusBar(80,15,hp,100,150,15,'orange','#314c70');
+			var hpBar = new statusBar(80,15,hp,maxHp,150,15,'orange','#314c70');
 		}
 		else 
 		{
-			var hpBar = new statusBar(80,15,hp,100,150,15,'green','#314c70');
+			var hpBar = new statusBar(80,15,hp,maxHp,150,15,'green','#314c70');
 		}
-		
-		var mpBar = new statusBar(80,35,mp,100,150,15,'blue','#314c70');
-
+	
 		hpBar.display(); 	
-		mpBar.display();
-
+		
 		ctx.restore();
 
 		let wallHTop = new Image();
@@ -387,19 +383,68 @@ class game
 		this.wallVRight = new Img(wallVRight.src,maxCanvasWidth - wallVRight.width + (2/3) * wallVRight.width,((5/7) * this.sky.height) + wallHTop.height - 5);
 	}
 
+	isWin()
+	{
+		this.totalGruntHp = 0;
+		for (var i = 0; i < this.gruntArr.length; i++) 
+		{
+			this.totalGruntHp = this.totalGruntHp + this.gruntArr[i].hp;
+		}
+		if (this.totalGruntHp <= 0 && this.Boss.hp <= 0) 
+		{
+			return true;
+		}
+		else if (this.player1.hp <= 0) 
+		{
+			return false;
+		}
+	}
+
+	gameOver()
+	{
+		if (this.isWin() === true) 
+		{
+			canvas.style.display = "none";
+	
+			var menu = document.getElementById('menu')
+			menu.style.display = "block";
+
+			var btn = document.getElementById('btn-1')
+			btn.style.display = "none";
+	
+			var Win = document.getElementById('Win')
+			Win.style.display = "block";
+
+			setTimeout(() => {location.reload()},3000);
+		}
+		else if (this.isWin() === false) 
+		{
+			canvas.style.display = "none";
+	
+			var menu = document.getElementById('menu')
+			menu.style.display = "block";
+			
+			var btn = document.getElementById('btn-1')
+			btn.style.display = "none";
+
+			var Lose = document.getElementById('Lose')
+			Lose.style.display = "block";
+
+			setTimeout(() => {location.reload()},3000);
+		}
+	}
+
 	gameLoop() 
 	{
-		//console.log('Function : gameLoop()');
-			
-		//clearCanvas();
 			this.displayBg();
 			
-			this.initAmmo();
-			this.player1.start();
-	
 			this.initGrunts();
 			this.Boss.start();
 
+			this.initAmmo();
+			this.player1.start();
+	
+			
 			if (this.Boss.hp > 10 && this.player1.hp) 
 			{
 				this.Boss.fire(this.player1.xPos,this.player1.yPos + this.player1.height / 2);
@@ -416,41 +461,40 @@ class game
 			this.collisionGruntGrunt();
 			this.collisionPlayer1Grunt();
 			this.collisionPlayer1Boss();
+			this.gameOver();
 		
-	}
-
-	noOfGrunts()
-	{
-		for (var i = 0; i < this.gruntArr.length; i++) 
-		{
-			this.gruntCount = 0;
-			if(this.gruntArr[i].hp > 0)
-			{
-				this.gruntCount ++ ;
-			}
-			return this.gruntCount;
-		}
 	}
 
 	start() 
 	{
 
 		setInterval(() => {this.gameLoop();
-							//console.log('asd',this);
 						},1000 / 60);
-		let can = document.getElementById('canvas-1')
-		/*can.onclick = function (event) 
-									{
-										si = !si;
-									}	*/
 	}
 
 }
 
-var level1 = new game;
+function newGame() 
+{
+	canvas.style.display = "block";
+	
+	var menu = document.getElementById('menu')
+	menu.style.display = "none";
+	
+	var Win = document.getElementById('Win')
+	Win.style.display = "none";
+	
+	var Lose = document.getElementById('Lose')
+	Lose.style.display = "none";
+	
+	var level1 = new game;
 
-level1.spawnPlayer1();
-level1.displayBg();
-level1.spawnGrunts();
-level1.spawnBoss();
-level1.start();
+	level1.spawnPlayer1();
+	level1.displayBg();
+	level1.spawnGrunts();
+	level1.spawnBoss();
+	level1.start();
+}
+
+
+

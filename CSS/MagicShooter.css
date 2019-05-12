@@ -1,9 +1,45 @@
 body
 {
 	margin: 0px;
+	background-color: #10206c;
 }
 
 canvas
 {
-	
+	display: none;	
+}
+
+h1
+{
+	color: white;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 50px;
+	text-align: center;
+	margin: 100px;
+}
+
+.btn-1
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	  
+	transform: translate(-50%, -50%);
+}
+
+#afterGame
+{
+	display: none;
+}
+
+#Win
+{
+	display: none;
+	margin: 100px;
+}
+
+#Lose
+{
+	display: none;
+	margin: 100px;
 }
