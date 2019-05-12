@@ -83,7 +83,7 @@ class Ammo
 		this.dotYArr.push(y);
 		if (this.isFacingLeft) 
 		{
-			ctx.drawImage(this.sheet,this.sheetWinXPos,this.sheetWinYPos,this.sheetWinWidth,this.sheetWinHeight,-(this.width/2),0,this.width,this.height)	
+			ctx.drawImage(this.sheet,this.sheetWinXPos,this.sheetWinYPos,this.sheetWinWidth,this.sheetWinHeight,-(this.width),0,this.width,this.height)	
 		}
 		else 
 		{

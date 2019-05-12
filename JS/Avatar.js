@@ -32,8 +32,7 @@ class Avatar
 		
 		this.isFacingLeft = false;
 		this.previousIsFacingLeft = false;
-		this.nextMove = [false,false,false,false];			//	nextMove[up,down,left,right]
-
+		
 		this.leftKey = 37;
 		this.rightKey = 39;
 		this.upKey = 38;
@@ -57,33 +56,29 @@ class Avatar
 									if (event.keyCode === this.upKey) 
 									{
 										//console.log('up pressed.');
-										this.nextMove[0] = true;
-										this.nextMove[1] = false;
+										this.dy = -1;
 									}
 									else if (event.keyCode === this.downKey) 
 									{
 										//console.log('down pressed.');
-										this.nextMove[1] = true;
-										this.nextMove[0] = false;	
+										this.dy = 1;	
 									}
 									
 									if (event.keyCode === this.leftKey) 
 									{
 										//console.log('left pressed.');
-										this.nextMove[2] = true;
-										this.nextMove[3] = false;
+										this.dx = -1;
 										this.isFacingLeft = true;
 									}
 									else if (event.keyCode === this.rightKey) 
 									{
 										//console.log('right pressed.');
-										this.nextMove[3] = true;
-										this.nextMove[2] = false;
+										this.dx = 1;
 										this.isFacingLeft = false;
 									}
-									//console.log(this.nextMove);
+
 									this.updateAnimation();
-									this.updatePos();
+									this.move(this.dx,this.dy);
 								}
 
 								
@@ -99,23 +94,25 @@ class Avatar
 									if (event.keyCode === this.upKey) 
 									{
 										//console.log('up cleared.');
-										this.nextMove[0] = false;
+										this.dy = 0;
 									}
 									if (event.keyCode === this.downKey) 
 									{
 										//console.log('down cleared.');
-										this.nextMove[1] = false;
+										this.dy = 0;
 									}
 									if (event.keyCode === this.leftKey) 
 									{
 										//console.log('left cleared.');
-										this.nextMove[2] = false;
+										this.dx = 0;
 									}
 									if (event.keyCode === this.rightKey) 
 									{
 										//console.log('right cleared.');
-										this.nextMove[3] = false;
-									}									
+										this.dx = 0;
+									}	
+									this.move(this.dx,this.dy);
+
 								}
 								);
 
@@ -218,37 +215,6 @@ class Avatar
 		this.animate(this.sheetCurrentRow,this.sheetCurrentCol); 
 	}
 
-	updatePos()
-	{
-		if (this.nextMove[0])			//	Up 
-		{
-			this.dy = -1;
-		}
-		else if (this.nextMove[1])			//	Down
-		{
-			this.dy = 1;
-		}
-		else
-		{
-			this.dy = 0;
-		}
-		
-		if (this.nextMove[2])			//	Left
-		{
-			this.dx = -1;
-		}
-		else if (this.nextMove[3])			//	Right
-		{
-			this.dx = 1;
-		}
-		else
-		{
-			this.dx = 0;
-		}
-
-		this.move(this.dx,this.dy);
-	}
-
 	fire(tXPos,tYPos) 
 	{
 		//console.log('Function : fire()');
@@ -292,19 +258,9 @@ class Avatar
 			this.sheetCurrentRow = -1;
 			this.dx = 0;
 			this.dy = 0;
+			this.hp = 0;
 		}
 	}
 
 }
 
-let initXPos = 500;
-let initYPos = 300;
-let img = new Image();
-img.src = "Images/John.png";
-img.width = 640;
-img.height = 480;
-let noOfRows = 6;
-let noOfCols = 8;
-let hp = 100;
-
-var player1 = new Avatar(initXPos,initYPos,img.src,img.width,img.height,noOfRows,noOfCols,hp);

@@ -1,7 +1,7 @@
 //	Grunt Class
 class Grunt
 {
-	constructor(xPos,yPos,imgSrc,imgWidth,imgHeight,rows,cols,hp)
+	constructor(xPos,yPos,imgSrc,imgWidth,imgHeight,rows,cols,hp,target)
 	{
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -39,10 +39,11 @@ class Grunt
 		this.sheetCurrentCol = 0;
 		this.nextSpriteCounter = 0;
 
-		this.targetXPos = 100;
-		this.targetYPos = 100;
+		this.target = target;
+		this.targetXPos = this.target.xPos;
+		this.targetYPos = this.target.yPos;
 
-		this.damage = .5;
+		this.damage = 1;
 
 		this.animationDelayCounter = 0
 	}
@@ -101,11 +102,11 @@ class Grunt
 	{
 		//console.log('[Class Grunt]\n','Function : isDirChange()');
 
-		if (player1.xPos + player1.width / 2 < this.xPos)			//	this.width should be playe.width but it works
+		if (this.target.xPos + this.target.width / 2 < this.xPos)			//	this.width should be playe.width but it works
 		{
 			this.isFacingLeft = true;
 		}
-		else if (player1.xPos > this.xPos + this.width / 2)
+		else if (this.target.xPos > this.xPos + this.width / 2)
 		{
 			this.isFacingLeft = false;
 		}
@@ -155,8 +156,8 @@ class Grunt
 
 		if (true) 
 		{
-			this.xMovement = (player1.xPos - this.xPos);
-			this.yMovement = (player1.yPos - this.yPos);
+			this.xMovement = (this.target.xPos - this.xPos);
+			this.yMovement = (this.target.yPos - this.yPos);
 			this.totalMovement = Math.abs(this.xMovement) + Math.abs(this.yMovement);
 			this.dx = (this.xMovement / this.totalMovement) * this.speed;
 			this.dy = (this.yMovement / this.totalMovement) * this.speed;	
@@ -170,7 +171,7 @@ class Grunt
 
 	inArea()
 	{
-		if (((this.targetXPos >= this.xPos) && (this.targetXPos <= this.xPos + this.width)) && ((this.targetYPos >= this.yPos) && (this.targetYPos <= this.yPos + this.height))) 
+		if (((this.target.xPos >= this.xPos) && (this.target.xPos <= this.xPos + this.width)) && ((this.target.yPos >= this.yPos) && (this.target.yPos <= this.yPos + this.height))) 
 		{
 			return true;
 		}
@@ -182,7 +183,7 @@ class Grunt
 
 	start()
 	{
-		if((player1.xPos != this.xPos) && (player1.yPos != this.yPos))
+		if((this.target.xPos != this.xPos) && (this.target.yPos != this.yPos))
 		{
 			this.updateAnimation();	
 		}
