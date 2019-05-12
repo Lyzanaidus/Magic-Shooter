@@ -149,23 +149,42 @@ class game
 
 	collisionAmmoPlayer()
 	{
-		for (let i = 0; i < this.player1.ammoArr.length; i++) 		
+		for (let i = 0; i < this.Boss.ammoArr.length; i++) 		
 		{
-			if (this.isCollisionObj(this.player1.ammoArr[i],this.Boss)) 
+			if (this.isCollisionObj(this.Boss.ammoArr[i],this.player1)) 
 			{
 				//console.log(isCollisionObj(player1.ammoArr[i],gruntArr[j]));
-				this.Boss.xPos = this.Boss.xPos - (this.Boss.dx * this.Boss.speed);
-				this.player1.ammoArr[i].xPos = this.player1.ammoArr[i].xPos - (this.player1.ammoArr[i].dx);
+				this.player1.xPos = this.player1.xPos - (this.player1.dx * this.player1.speed);
+				this.Boss.ammoArr[i].xPos = this.Boss.ammoArr[i].xPos - (this.Boss.ammoArr[i].dx);
 
-				if (!this.player1.ammoArr[i].explode) 
+				if (!this.Boss.ammoArr[i].explode) 
 				{
-					this.Boss.hp = this.Boss.hp - this.player1.ammoArr[i].damage;
+					this.player1.hp = this.player1.hp - this.Boss.ammoArr[i].damage;
 				}
 
-				this.player1.ammoArr[i].explode = true;
+				this.Boss.ammoArr[i].explode = true;
 			}
 		}
 			
+	}
+
+	collisionAmmoAmmo()
+	{
+		for (let i = 0; i < this.Boss.ammoArr.length; i++) 		
+		{
+			for (let j = 0; j < this.player1.ammoArr.length; j++) 		
+			{
+				if (this.isCollisionObj(this.Boss.ammoArr[i],this.player1.ammoArr[j])) 
+				{
+					//console.log(isCollisionObj(player1.ammoArr[i],gruntArr[j]));
+					this.Boss.ammoArr[i].xPos = this.Boss.ammoArr[i].xPos - (this.Boss.ammoArr[i].dx);
+					this.player1.ammoArr[j].xPos = this.player1.ammoArr[j].xPos - (this.player1.ammoArr[j].dx);
+
+					this.Boss.ammoArr[i].explode = true;
+					this.player1.ammoArr[j].explode = true;
+				}
+			}
+		}			
 	}
 
 	collisionAmmoBorder()
@@ -385,8 +404,11 @@ class game
 			{
 				this.Boss.fire(this.player1.xPos,this.player1.yPos + this.player1.height / 2);
 			}
+
+			this.collisionAmmoAmmo();
 			this.collisionAmmoGrunt();
 			this.collisionAmmoBoss();
+			this.collisionAmmoPlayer();
 			this.collisionAmmoBorder();
 			this.collisionPlayerBorder();
 			this.collisionGruntBorder();
@@ -395,6 +417,19 @@ class game
 			this.collisionPlayer1Grunt();
 			this.collisionPlayer1Boss();
 		
+	}
+
+	noOfGrunts()
+	{
+		for (var i = 0; i < this.gruntArr.length; i++) 
+		{
+			this.gruntCount = 0;
+			if(this.gruntArr[i].hp > 0)
+			{
+				this.gruntCount ++ ;
+			}
+			return this.gruntCount;
+		}
 	}
 
 	start() 
