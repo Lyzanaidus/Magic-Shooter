@@ -95,7 +95,11 @@ class game
 		{
 			this.player1.ammoArr[i].start();
 		}
-		
+		for (let i = 0; i < this.Boss.ammoArr.length; i++) 
+		{
+			this.Boss.ammoArr[i].start();
+		}
+
 	}
 
 	collisionAmmoGrunt()
@@ -123,6 +127,27 @@ class game
 	}
 
 	collisionAmmoBoss()
+	{
+		for (let i = 0; i < this.player1.ammoArr.length; i++) 		
+		{
+			if (this.isCollisionObj(this.player1.ammoArr[i],this.Boss)) 
+			{
+				//console.log(isCollisionObj(player1.ammoArr[i],gruntArr[j]));
+				this.Boss.xPos = this.Boss.xPos - (this.Boss.dx * this.Boss.speed);
+				this.player1.ammoArr[i].xPos = this.player1.ammoArr[i].xPos - (this.player1.ammoArr[i].dx);
+
+				if (!this.player1.ammoArr[i].explode) 
+				{
+					this.Boss.hp = this.Boss.hp - this.player1.ammoArr[i].damage;
+				}
+
+				this.player1.ammoArr[i].explode = true;
+			}
+		}
+			
+	}
+
+	collisionAmmoPlayer()
 	{
 		for (let i = 0; i < this.player1.ammoArr.length; i++) 		
 		{
@@ -352,9 +377,15 @@ class game
 			
 			this.initAmmo();
 			this.player1.start();
+	
 			this.initGrunts();
-			this.collisionAmmoGrunt();
 			this.Boss.start();
+
+			if (this.Boss.hp > 10 && this.player1.hp) 
+			{
+				this.Boss.fire(this.player1.xPos,this.player1.yPos + this.player1.height / 2);
+			}
+			this.collisionAmmoGrunt();
 			this.collisionAmmoBoss();
 			this.collisionAmmoBorder();
 			this.collisionPlayerBorder();

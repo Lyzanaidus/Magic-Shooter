@@ -119,17 +119,18 @@ class Avatar
 		var AvatarObject = this;
 		var can = document.getElementById('canvas-1')
 		
-		if (this.hp > 0) 
-		{
+		
 			can.onclick = function (event) 
 			{
 				
 				//console.log('clicked at ',event.clientX,event.clientY);
-				AvatarObject.targetXPos = event.clientX;
-				AvatarObject.targetYPos = event.clientY;
-				AvatarObject.fire(AvatarObject.targetXPos,AvatarObject.targetYPos);	
+				if (AvatarObject.hp > 1) 
+				{
+					AvatarObject.targetXPos = event.clientX;
+					AvatarObject.targetYPos = event.clientY;
+					AvatarObject.fire(AvatarObject.targetXPos,AvatarObject.targetYPos);	
+				}
 			}
-		}
 	}
 
 	animate(sheetCurrentRow,sheetCurrentCol) 
@@ -234,7 +235,7 @@ class Avatar
 			{
 				this.bulletNo++;
 				this.ammoArr.push(new Ammo(this.xPos,this.yPos,img.src,img.width,img.height,noOfRows,noOfCols,targetXPos,targetYPos,this.isFacingLeft));
-				console.log(targetXPos,this.xPos + this.width,this.xPos,this.width)
+				//console.log(targetXPos,this.xPos + this.width,this.xPos,this.width)
 			}
 		}
 		else 
@@ -250,17 +251,19 @@ class Avatar
 
 	start()
 	{
-		this.display();
-		level1.Boss.fire(this.targetXPos,this.targetYPos);	
+		
 		if (this.hp <= 0) 
 		{
-			this.xPos = 2000;
-			this.yPos = 300;
 			this.sheetCurrentRow = -1;
 			this.dx = 0;
 			this.dy = 0;
 			this.hp = 0;
 		}
+		else
+		{
+			this.display();	
+		}
+
 	}
 
 }

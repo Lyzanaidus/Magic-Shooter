@@ -183,13 +183,18 @@ class Grunt
 
 	start()
 	{
-		if((this.target.xPos != this.xPos) && (this.target.yPos != this.yPos))
+		if (level1.player1.hp > 0) 
 		{
-			this.updateAnimation();	
+			if((this.target.xPos != this.xPos) && (this.target.yPos != this.yPos))
+			{
+				this.updateAnimation();	
+			}
+			this.updatePos();
+			this.move();
 		}
-		this.updatePos();
-		this.move();
-		this.display();
+
+		this.display();	
+		
 		if (this.hp <= 0) 
 		{
 			this.xPos = -500;
@@ -198,12 +203,6 @@ class Grunt
 			this.dx = 0;
 			this.dy = 0;
 		}
-		
-		/*//console.log('Area X : ',this.xPos,this.xPos + this.width);
-		//console.log('targetXPos : ',this.targetXPos);
-		//console.log('Area Y : ',this.yPos,this.yPos + this.height);
-		//console.log('targetYPos : ',this.targetYPos);
-		//console.log('inArea : ',this.inArea())*/
 	}
 
 }

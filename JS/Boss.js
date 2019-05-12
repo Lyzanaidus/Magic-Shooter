@@ -46,7 +46,8 @@ class Boss
 		this.ammoArr = [];
 		this.damage = 1;
 
-		this.animationDelayCounter = 0
+		this.animationDelayCounter = 0;
+		this.fireDelayCounter = 0;
 	}
 
 	animate(sheetCurrentRow,sheetCurrentCol) 
@@ -185,8 +186,7 @@ class Boss
 	fire(tXPos,tYPos) 
 	{
 		//console.log('Function : fire()');
-		
-		if (true) 
+		if(this.fireDelayCounter === 0)
 		{
 			var img = new Image();
 			img.src = "Images/Ammo.png";
@@ -196,14 +196,14 @@ class Boss
 			var noOfCols = 8;
 			var targetXPos = tXPos;
 			var targetYPos = tYPos;
-		
 			if (!this.isFacingLeft) 
 			{
 				if (targetXPos >= this.xPos + this.width) 
 				{
 					this.bulletNo++;
 					this.ammoArr.push(new Ammo(this.xPos,this.yPos,img.src,img.width,img.height,noOfRows,noOfCols,targetXPos,targetYPos,this.isFacingLeft));
-					console.log(targetXPos,this.xPos + this.width,this.xPos,this.width)
+					//console.log(targetXPos,this.xPos + this.width,this.xPos,this.width)
+					console.log(targetXPos,targetYPos);
 				}
 			}
 			else 
@@ -212,29 +212,37 @@ class Boss
 				{
 					this.bulletNo++;
 					this.ammoArr.push(new Ammo(this.xPos,this.yPos,img.src,img.width,img.height,noOfRows,noOfCols,targetXPos,targetYPos,this.isFacingLeft));
+					console.log(targetXPos,targetYPos);
 				}
 			}
 		}
+		this.fireDelayCounter = (this.fireDelayCounter + 1) % 60;
+		
 		//console.log('ammoArr[',this.bulletNo,'] : ',this.ammoArr[this.bulletNo]);
 	}
 
 	start()
 	{
-		if((this.target.xPos != this.xPos) && (this.target.yPos != this.yPos))
-		{
-			this.updateAnimation();	
-		}
-		this.updatePos();
-		this.move();
-		this.display();
-		this.fire();
+		
 		if (this.hp <= 0) 
 		{
-			this.xPos = -500;
-			this.yPos = -500;
-			this.sheetCurrentRow = -1;
 			this.dx = 0;
 			this.dy = 0;
+		}
+		else
+		{
+			if (level1.player1.hp > 0) 
+			{
+				if((this.target.xPos != this.xPos) && (this.target.yPos != this.yPos))
+				{
+					this.updateAnimation();	
+				}
+				
+				this.updatePos();
+				this.move();
+			}
+			this.display();
+			  
 		}
 	}
 
