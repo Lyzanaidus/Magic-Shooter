@@ -58,6 +58,20 @@ class game
 		this.gruntArr.push(new Grunt(gInitXPos,gInitYPos,gImg.src,gImg.width,gImg.height,gNoOfRows,gNoOfCols,gHp,this.player1));
 	}
 
+	spawnBoss() 
+	{
+		//console.log('Function : spawn()');
+		let gImg = new Image();
+		gImg.src = "Images/John.png";
+		gImg.width = 640;
+		gImg.height = 480;
+		let gNoOfRows = 6;
+		let gNoOfCols = 8;
+		let gHp = 1000;
+
+		this.Boss = (new Boss(this.wallVRight.xPos - (gImg.width / gNoOfCols) - 100,maxCanvasHeight / 2,gImg.src,gImg.width,gImg.height,gNoOfRows,gNoOfCols,gHp,this.player1));
+	}
+
 	spawnGrunts() 
 	{
 		for (let i = 0; i < this.maxGruntNo; i++) 
@@ -108,6 +122,27 @@ class game
 			
 	}
 
+	collisionAmmoBoss()
+	{
+		for (let i = 0; i < this.player1.ammoArr.length; i++) 		
+		{
+			if (this.isCollisionObj(this.player1.ammoArr[i],this.Boss)) 
+			{
+				//console.log(isCollisionObj(player1.ammoArr[i],gruntArr[j]));
+				this.Boss.xPos = this.Boss.xPos - (this.Boss.dx * this.Boss.speed);
+				this.player1.ammoArr[i].xPos = this.player1.ammoArr[i].xPos - (this.player1.ammoArr[i].dx);
+
+				if (!this.player1.ammoArr[i].explode) 
+				{
+					this.Boss.hp = this.Boss.hp - this.player1.ammoArr[i].damage;
+				}
+
+				this.player1.ammoArr[i].explode = true;
+			}
+		}
+			
+	}
+
 	collisionAmmoBorder()
 	{
 		for (let i = 0; i < this.player1.ammoArr.length; i++) 		
@@ -124,6 +159,11 @@ class game
 	collisionPlayerBorder()
 	{
 		this.borderCollision(this.player1);
+	}
+	
+	collisionBossBorder()
+	{
+		this.borderCollision(this.Boss);
 	}
 
 	collisionGruntBorder()
@@ -239,6 +279,17 @@ class game
 			}
 	}
 
+	collisionPlayer1Boss()
+	{
+		if (this.isCollisionObj(this.player1,this.Boss)) 
+		{
+			this.player1.xPos = this.player1.xPos - ((this.player1.dx * this.player1.speed) + (this.player1.dx * 2));
+			this.player1.hp = this.player1.hp - this.Boss.damage;
+			this.Boss.xPos = this.Boss.xPos - (this.Boss.dx * this.Boss.speed);
+		}
+	
+	}
+
 	displayBg() 		
 	{
 		ctx.beginPath();
@@ -303,11 +354,15 @@ class game
 			this.player1.start();
 			this.initGrunts();
 			this.collisionAmmoGrunt();
+			this.Boss.start();
+			this.collisionAmmoBoss();
 			this.collisionAmmoBorder();
 			this.collisionPlayerBorder();
 			this.collisionGruntBorder();
+			this.collisionBossBorder();
 			this.collisionGruntGrunt();
 			this.collisionPlayer1Grunt();
+			this.collisionPlayer1Boss();
 		
 	}
 
@@ -329,5 +384,7 @@ class game
 var level1 = new game;
 
 level1.spawnPlayer1();
+level1.displayBg();
 level1.spawnGrunts();
+level1.spawnBoss();
 level1.start();

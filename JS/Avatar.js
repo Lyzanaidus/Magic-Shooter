@@ -251,6 +251,7 @@ class Avatar
 	start()
 	{
 		this.display();
+		level1.Boss.fire(this.targetXPos,this.targetYPos);	
 		if (this.hp <= 0) 
 		{
 			this.xPos = 2000;
