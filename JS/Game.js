@@ -6,6 +6,7 @@ class game
 		this.si = true;
 		this.maxGruntNo = 3;
 		this.gruntArr = [];
+		this.gameOverCount = 0;
 
 	}
 
@@ -402,8 +403,9 @@ class game
 
 	gameOver()
 	{
-		if (this.isWin() === true) 
+		if (this.isWin() === true && this.gameOverCount < 1) 
 		{
+			this.gameOverCount++;
 			canvas.style.display = "none";
 	
 			var menu = document.getElementById('menu')
@@ -417,8 +419,9 @@ class game
 
 			setTimeout(() => {location.reload()},3000);
 		}
-		else if (this.isWin() === false) 
+		else if (this.isWin() === false && this.gameOverCount < 1) 
 		{
+			this.gameOverCount++;
 			canvas.style.display = "none";
 	
 			var menu = document.getElementById('menu')
